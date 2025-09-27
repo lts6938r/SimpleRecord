@@ -19,7 +19,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.PrimaryScrollableTabRow
-import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -73,7 +72,7 @@ fun HomeScreen(navController: NavController) {
                                 },
                                 onClick = {}
                             )
-                            HorizontalDivider() // Material 3 divider
+                            HorizontalDivider()
                             DropdownMenuItem(
                                 text = { Text("添加书籍作品") },
                                 onClick = {
@@ -126,8 +125,8 @@ fun BooksContent() {
 
         ) {
 
-        items(20) {
-            BookCard()
+        items(1) {
+//            BookCard()
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp, // 设置下划线厚度

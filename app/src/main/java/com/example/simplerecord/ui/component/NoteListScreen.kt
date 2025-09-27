@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -19,6 +18,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -34,93 +34,112 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.simplerecord.model.Note
-import com.example.simplerecord.ui.navigation.Screen
 import com.example.simplerecord.viewmodel.NoteViewModel
-
+import androidx.compose.foundation.lazy.items
 @Composable
 fun NoteListScreen(
     navController: NavController,
-    noteViewModel: NoteViewModel,
-    notes: List<Note>
-) {
+    noteViewModel: NoteViewModel = hiltViewModel(),
+
+    ) {
     var isOneSelected by remember { mutableStateOf(false) }
     var selectedNoteIds by remember { mutableStateOf(emptySet<Int>()) }
+    val notes by noteViewModel.noteList.collectAsStateWithLifecycle()
+    val isLoading by noteViewModel.isLoading.collectAsStateWithLifecycle()
 
     LaunchedEffect(isOneSelected) {
         if (!isOneSelected) {
             selectedNoteIds = emptySet()
         }
     }
-
-    Column {
-        NoteListTopAppBar(
-            isOneSelected = isOneSelected,
-            selectedNoteCount = selectedNoteIds.size,
-            onCloseSelection = { isOneSelected = false },
-            onDeleteSelected = {
-                noteViewModel.deleteNotes(selectedNoteIds)
-                isOneSelected = false
-            }
-        )
-
-
-        Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn {
-                items(notes) { note ->
-                    // Check if the note's Int ID is in the selectedNoteIds set
-                    val isSelected = selectedNoteIds.contains(note.id)
-                    val backgroundColor = if (isSelected) Color(0xFF87CEFA) else Color.White
-
-                    NoteListItem(
-                        note = note,
-                        backgroundColor = backgroundColor,
-                        onLongClick = {
-                            if (!isOneSelected) { // Start selection mode
-                                isOneSelected = true
-                                selectedNoteIds = setOf(note.id) // Add the Int ID
-                            } else { // Toggle selection for current note
-                                selectedNoteIds = if (isSelected) {
-                                    selectedNoteIds - note.id
-                                } else {
-                                    selectedNoteIds + note.id
-                                }
-                                if (selectedNoteIds.isEmpty()) isOneSelected = false
-                            }
-                        },
-                        onClick = {
-                            if (isOneSelected) { // In selection mode, toggle selection
-                                selectedNoteIds = if (isSelected) {
-                                    selectedNoteIds - note.id
-                                } else {
-                                    selectedNoteIds + note.id
-                                }
-                                if (selectedNoteIds.isEmpty()) isOneSelected = false
-                            } else { // Not in selection mode, navigate to edit
-                                // Pass the Int ID to the route
-                                navController.navigate(Screen.NoteDetail.createRoute(note.id.toString()))
-                            }
-                        }
-                    )
-                }
-            }
-
-            FloatingActionButton(
-                onClick = { navController.navigate(Screen.NoteDetail.createRoute("new")) },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(bottom = 70.dp, end = 10.dp)
+    when {
+        isLoading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add new note")
+                CircularProgressIndicator()
+            }
+        }
+
+
+        else -> {
+
+            Column {
+                NoteListTopAppBar(
+                    isOneSelected = isOneSelected,
+                    selectedNoteCount = selectedNoteIds.size,
+                    onCloseSelection = { isOneSelected = false },
+                    onDeleteSelected = {
+                        noteViewModel.deleteNotes(selectedNoteIds)
+                        isOneSelected = false
+                    }
+                )
+
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    LazyColumn {
+                        items(notes) { note ->
+                            // Check if the note's Int ID is in the selectedNoteIds set
+                            val isSelected = selectedNoteIds.contains(note.id)
+                            val backgroundColor = if (isSelected) Color(0xFF87CEFA) else Color.White
+
+                            NoteListItem(
+                                note = note,
+                                backgroundColor = backgroundColor,
+                                onLongClick = {
+                                    if (!isOneSelected) { // Start selection mode
+                                        isOneSelected = true
+                                        selectedNoteIds = setOf(note.id) // Add the Int ID
+                                    } else { // Toggle selection for current note
+                                        selectedNoteIds = if (isSelected) {
+                                            selectedNoteIds - note.id
+                                        } else {
+                                            selectedNoteIds + note.id
+                                        }
+                                        if (selectedNoteIds.isEmpty()) isOneSelected = false
+                                    }
+                                },
+                                onClick = {
+                                    if (isOneSelected) { // In selection mode, toggle selection
+                                        selectedNoteIds = if (isSelected) {
+                                            selectedNoteIds - note.id
+                                        } else {
+                                            selectedNoteIds + note.id
+                                        }
+                                        if (selectedNoteIds.isEmpty()) isOneSelected = false
+                                    } else { // Not in selection mode, navigate to edit
+                                        // Pass the Int ID to the route
+//                                        navController.navigate(Screen.NoteDetail.createRoute(note.id.toString()))
+                                    }
+                                }
+                            )
+                        }
+                    }
+
+//                    FloatingActionButton(
+//                        onClick = { navController.navigate(Screen.NoteDetail.createRoute("new")) },
+//                        modifier = Modifier
+//                            .align(Alignment.BottomEnd)
+//                            .padding(bottom = 40.dp, end = 10.dp)
+//                    ) {
+//                        Icon(Icons.Filled.Add, contentDescription = "Add new note")
+//                    }
+                }
             }
         }
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,7 +168,7 @@ fun NoteListTopAppBar(
                 }
             },
 
-        )
+            )
     } else {
         TopAppBar(
             title = { Text("已选择${selectedNoteCount}条", color = Color.Blue) },

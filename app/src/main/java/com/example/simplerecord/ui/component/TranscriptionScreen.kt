@@ -1,4 +1,5 @@
 package com.example.simplerecord.ui.component
+
 import android.Manifest
 import android.net.Uri
 import android.widget.Toast
@@ -48,9 +49,14 @@ fun TranscriptionScreen(viewModel: TranscriptionViewModel = viewModel()) {
             val filePath = viewModel.getFilePathFromUri(context, it)
             if (filePath != null) {
                 viewModel.setRecordedFilePath(filePath)
-                Toast.makeText(context, "Selected: ${filePath.substringAfterLast('/')}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Selected: ${filePath.substringAfterLast('/')}",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(context, "Failed to get file path from URI", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Failed to get file path from URI", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -69,7 +75,11 @@ fun TranscriptionScreen(viewModel: TranscriptionViewModel = viewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("音频转录", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(bottom = 24.dp))
+        Text(
+            "音频转录",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
 
         // 录音按钮
         Row(
@@ -112,7 +122,10 @@ fun TranscriptionScreen(viewModel: TranscriptionViewModel = viewModel()) {
         // 文件路径显示
         val recordedFile = transcriptionState.recordedFilePath
         if (recordedFile != null) {
-            Text("录音文件: ${recordedFile.substringAfterLast('/')}", style = MaterialTheme.typography.bodyMedium)
+            Text(
+                "录音文件: ${recordedFile.substringAfterLast('/')}",
+                style = MaterialTheme.typography.bodyMedium
+            )
             Spacer(modifier = Modifier.height(8.dp))
         } else {
             Text("未录制音频或未选择文件", style = MaterialTheme.typography.bodyMedium)
@@ -158,10 +171,18 @@ fun TranscriptionScreen(viewModel: TranscriptionViewModel = viewModel()) {
         // 状态指示
         if (transcriptionState.isRecording) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-            Text("正在录音...", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(top = 8.dp))
+            Text(
+                "正在录音...",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         } else if (transcriptionState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-            Text("正在转录，请稍候...", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(top = 8.dp))
+            Text(
+                "正在转录，请稍候...",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         } else {
             transcriptionState.transcript?.let {
                 Spacer(modifier = Modifier.height(16.dp))

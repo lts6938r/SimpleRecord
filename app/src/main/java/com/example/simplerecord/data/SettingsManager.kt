@@ -15,6 +15,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class SettingsManager(private val context: Context) {
 
     private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode_enabled")
+
     // 一个字符串用于用户昵称
     private val USER_NICKNAME_KEY = stringPreferencesKey("user_nickname")
 

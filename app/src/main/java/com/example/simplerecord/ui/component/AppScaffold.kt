@@ -19,13 +19,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.simplerecord.model.Note
 import com.example.simplerecord.ui.navigation.AppNavHost
 import com.example.simplerecord.ui.navigation.Screen
-import com.example.simplerecord.viewmodel.NoteViewModel
 
 @Composable
 fun AppScaffold(
     navController: NavHostController,
-    noteViewModel: NoteViewModel,
-    notes: List<Note>
+//    notes: List<Note>
 ) {
     val bottomNavigationItems = listOf(
         Pair("首页", Icons.Filled.Home) to Screen.Home.route,
@@ -51,10 +49,16 @@ fun AppScaffold(
                 ) {
                     bottomNavigationItems.forEach { (item, route) ->
                         val (label, icon) = item // 解构 Pair
-                        val isSelected = currentDestination?.hierarchy?.any { it.route == route } == true
+                        val isSelected =
+                            currentDestination?.hierarchy?.any { it.route == route } == true
 
                         NavigationBarItem(
-                            icon = { Icon(icon, contentDescription = label) }, // contentDescription 应该有意义
+                            icon = {
+                                Icon(
+                                    icon,
+                                    contentDescription = label
+                                )
+                            }, // contentDescription 应该有意义
                             label = { Text(label) },
                             selected = isSelected,
                             onClick = {
@@ -81,8 +85,7 @@ fun AppScaffold(
         // AppNavHost 应该接收 paddingValues 以便内容不会被底部导航栏遮挡
         AppNavHost(
             navController = navController,
-            noteViewModel = noteViewModel,
-            notes = notes,
+//            notes = notes,
             innerPadding = paddingValues // 将 Scaffold 提供的内边距传递给 NavHost
         )
     }

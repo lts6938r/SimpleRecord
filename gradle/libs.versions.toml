@@ -23,9 +23,12 @@ okhttpLoggingInterceptor = "5.1.0"
 gsonConverter = "3.0.0"
 accompanistPermissions = "0.37.3"
 kotlinxCoroutinesAndroid = "1.10.2"
-ksp = "2.1.21-2.0.1"
+ksp = "2.2.10-2.0.2"
 zxing = "4.3.0"
 icons="1.7.8"
+coil = "3.3.0"
+hilt = "2.57.2"
+hiltNavigationCompose="1.2.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -62,9 +65,16 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing" }
 material-icons-core={group="androidx.compose.material",name="material-icons-core",version.ref="icons"}
 material-icons-extended={group="androidx.compose.material",name="material-icons-extended",version.ref="icons"}
-
+# Coil for Compose
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+# Coil 的网络支持（推荐使用 OkHttp）
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+hilt-android = { group="com.google.dagger",name="hilt-android", version.ref = "hilt" }
+hilt-comiler={group="com.google.dagger",name="hilt-android-compiler",version.ref = "hilt"}
+hilt-navigation-compose={module="androidx.hilt:hilt-navigation-compose",version.ref="hiltNavigationCompose"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt-android-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

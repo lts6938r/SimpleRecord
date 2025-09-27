@@ -23,8 +23,8 @@ interface BookDao {
     @Update
     suspend fun updateBook(book: Book): Int
 
-    @Delete
-    suspend fun deleteBook(book: Book): Int
+    @Query("DELETE FROM Book WHERE id = :bookId")
+    suspend fun deleteBook(bookId: Int): Int
 
     @Query("DELETE FROM Book WHERE id IN (:bookIds)")
     suspend fun deleteBooksByIds(bookIds: List<Int>): Int

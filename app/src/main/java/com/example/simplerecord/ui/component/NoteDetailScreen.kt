@@ -28,13 +28,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.simplerecord.viewmodel.NoteViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteDetailScreen(navController: NavController, noteId: String?, noteViewModel: NoteViewModel) {
+fun NoteDetailScreen(
+    navController: NavController,
+    noteId: String?,
+    noteViewModel: NoteViewModel = viewModel()
+) {
     val context = LocalContext.current
     var title by remember { mutableStateOf(TextFieldValue("")) }
     var content by remember { mutableStateOf(TextFieldValue("")) }
@@ -45,7 +50,7 @@ fun NoteDetailScreen(navController: NavController, noteId: String?, noteViewMode
             coroutineScope.launch {
                 val intNoteId = noteId.toIntOrNull()
                 if (intNoteId != null) {
-                    val existingNote = noteViewModel.allNotes.value.find { it.id == intNoteId }
+                    val existingNote = noteViewModel.noteList.value.find { it.id == intNoteId }
                     existingNote?.let {
                         title = TextFieldValue(it.title)
                         content = TextFieldValue(it.content)
@@ -81,7 +86,8 @@ fun NoteDetailScreen(navController: NavController, noteId: String?, noteViewMode
                                     noteViewModel.updateNote(idInt, title.text, content.text)
                                     Toast.makeText(context, "便签已更新", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(context, "错误：无效的便签ID", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "错误：无效的便签ID", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
                             }
                         }

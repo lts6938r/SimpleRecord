@@ -62,7 +62,7 @@ fun SearchScreen(navController: NavController) {
                     // 为了演示，我们在这里模拟一些结果
                     // For demonstration:
                     if (searchText.isNotBlank()) {
-                         searchResults = generateMockResults(searchText) // 实际使用Stateflow或LiveData来更新
+                        searchResults = generateMockResults(searchText) // 实际使用Stateflow或LiveData来更新
                     }
                 },
                 modifier = Modifier
@@ -89,8 +89,7 @@ fun SearchScreen(navController: NavController) {
                         .padding(16.dp),
                     style = MaterialTheme.typography.bodyMedium
                 )
-            }
-            else {
+            } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -120,7 +119,11 @@ fun SearchResultItem(result: SearchResult, onClick: (SearchResult) -> Unit) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = result.title, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = result.description, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+            Text(
+                text = result.description,
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.Gray
+            )
         }
     }
 }

@@ -46,10 +46,9 @@ fun SettingsScreen(navController: NavController) {
     val context = LocalContext.current
     val settingsManager = remember { SettingsManager(context) } // 在这里获取 SettingsManager 实例
 
-    // 使用 collectAsStateWithLifecycle 收集 Flow 数据，安全地在生命周期内管理
     val isDarkModeEnabled by settingsManager.isDarkModeEnabled.collectAsState(initial = false)
 
-    val coroutineScope = rememberCoroutineScope() // 用于启动协程来执行挂起函数
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,7 +75,6 @@ fun SettingsScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // General Settings Section
             item {
                 SettingsSectionTitle("通用设置")
             }
@@ -131,7 +129,7 @@ fun SettingsScreen(navController: NavController) {
                     initialChecked = isDarkModeEnabled,
                     onCheckedChange = { isChecked ->
                         coroutineScope.launch {
-                        settingsManager.setDarkModeEnabled(isChecked)
+                            settingsManager.setDarkModeEnabled(isChecked)
                         }
                     }
                 )
@@ -205,7 +203,7 @@ fun SettingsScreen(navController: NavController) {
             item {
                 Spacer(modifier = Modifier.height(20.dp)) // Add some space at the bottom
             }
-            item{
+            item {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -259,7 +257,10 @@ fun SwitchSettingItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = title, style = MaterialTheme.typography.bodyLarge) // Material 3 typography
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge
+                ) // Material 3 typography
                 description?.let {
                     Text(
                         text = it,
@@ -295,7 +296,10 @@ fun ClickableSettingItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = title, style = MaterialTheme.typography.bodyLarge) // Material 3 typography
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge
+                ) // Material 3 typography
                 description?.let {
                     Text(
                         text = it,

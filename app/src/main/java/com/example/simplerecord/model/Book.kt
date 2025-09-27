@@ -18,5 +18,9 @@ data class Book(
     @ColumnInfo(name = "category")
     val category: String,
     @ColumnInfo(name = "comment")
-    val comment: String
+    val comment: String,
+    @ColumnInfo(name = "cover")
+    val cover : String,
+    @ColumnInfo(name = "year")
+    val year : String
 )

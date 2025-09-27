@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android.plugin)
+
 }
 
 android {
@@ -63,6 +65,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+    ksp(libs.hilt.comiler)
     implementation(libs.androidx.room.ktx) // Optional: If you use Coroutines with Room
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.paging.runtime.ktx)
@@ -79,6 +82,10 @@ dependencies {
     implementation(libs.zxing.android.embedded)
     implementation(libs.material.icons.core)
     implementation(libs.material.icons.extended)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
