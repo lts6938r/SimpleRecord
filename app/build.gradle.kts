@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.simplerecord"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.simplerecord"
@@ -77,6 +77,8 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.zxing.android.embedded)
+    implementation(libs.material.icons.core)
+    implementation(libs.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

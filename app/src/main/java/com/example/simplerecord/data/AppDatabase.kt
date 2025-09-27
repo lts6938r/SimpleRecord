@@ -19,41 +19,22 @@ import com.example.simplerecord.model.Note
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
-
     abstract fun bookDao(): BookDao // Add Book DAO
-
-
 
     companion object {
 
         @Volatile
-
         private var INSTANCE: AppDatabase? = null
-
-
-
         fun getDatabase(context: Context): AppDatabase {
-
             return INSTANCE ?: synchronized(this) {
-
                 val instance = Room.databaseBuilder(
-
                     context.applicationContext,
-
                     AppDatabase::class.java,
-
                     "Data.db" // Your database name
-
                 ).build()
-
                 INSTANCE = instance
-
                 instance
-
             }
-
         }
-
     }
-
 }

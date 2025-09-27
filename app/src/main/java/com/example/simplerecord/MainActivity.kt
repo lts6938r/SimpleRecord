@@ -17,8 +17,8 @@ import com.example.simplerecord.viewmodel.NoteViewModelFactory
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
         val application = application as MyApplication
         val noteRepository = application.noteRepository
 
@@ -28,16 +28,14 @@ class MainActivity : ComponentActivity() {
                 val noteViewModel: NoteViewModel = viewModel(
                     factory = NoteViewModelFactory(noteRepository)
                 )
-
-
                 val notes by noteViewModel.allNotes.collectAsState()
-
 
                 AppScaffold(
                     navController = navController,
                     noteViewModel = noteViewModel,
                     notes = notes
                 )
+
             }
         }
     }

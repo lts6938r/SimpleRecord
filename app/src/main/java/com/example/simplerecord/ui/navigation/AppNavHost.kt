@@ -14,7 +14,7 @@ import com.example.simplerecord.ui.component.BackupScreen
 import com.example.simplerecord.ui.component.HomeScreen
 import com.example.simplerecord.ui.component.MineScreen
 import com.example.simplerecord.ui.component.NoteDetailScreen
-import com.example.simplerecord.ui.component.NoteListContent
+import com.example.simplerecord.ui.component.NoteListScreen
 import com.example.simplerecord.ui.component.QRCodeScannerScreen
 import com.example.simplerecord.ui.component.SearchScreen
 import com.example.simplerecord.ui.component.SettingsScreen
@@ -53,7 +53,7 @@ fun AppNavHost(
             HomeScreen(navController = navController)
         }
         composable(Screen.Notes.route) {
-            NoteListContent(navController = navController, noteViewModel = noteViewModel, notes = notes)
+            NoteListScreen(navController = navController, noteViewModel = noteViewModel, notes = notes)
         }
         composable(Screen.Mine.route) {
             MineScreen(navController=navController)

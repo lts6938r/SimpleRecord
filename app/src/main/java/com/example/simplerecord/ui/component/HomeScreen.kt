@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -96,9 +97,9 @@ fun HomeScreen(navController: NavController) {
                 }
             }
         )
-        ScrollableTabRow(
+        PrimaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = Color.White,
+//            containerColor = Color.White,
         ) {
             tabs.forEachIndexed { index, text ->
                 Tab(
