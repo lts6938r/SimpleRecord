@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +19,7 @@ import com.example.simplerecord.ui.component.QRCodeScannerScreen
 import com.example.simplerecord.ui.component.SearchScreen
 import com.example.simplerecord.ui.component.SettingsScreen
 import com.example.simplerecord.ui.component.TranscriptionScreen
+import com.example.simplerecord.viewmodel.NoteViewModel
 
 
 sealed class Screen(val route: String) {
@@ -41,6 +43,7 @@ fun AppNavHost(
 //    notes: List<Note>,
     innerPadding: PaddingValues // Added padding parameter
 ) {
+    val noteViewModel: NoteViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
@@ -50,7 +53,15 @@ fun AppNavHost(
             HomeScreen(navController = navController)
         }
         composable(Screen.Notes.route) {
-            NoteListScreen(navController = navController)
+            NoteListScreen(navController = navController,noteViewModel=noteViewModel)
+        }
+        composable(Screen.NoteDetail.route) { backStackEntry ->
+            val noteId = backStackEntry.arguments?.getString("noteId")
+            NoteDetailScreen(
+                navController = navController,
+                noteId = noteId,
+                noteViewModel=noteViewModel
+            )
         }
         composable(Screen.Mine.route) {
             MineScreen(navController = navController)
@@ -73,12 +84,6 @@ fun AppNavHost(
         composable(Screen.AddBook.route) {
             Text("添加书籍内容")
         }
-        composable(Screen.NoteDetail.route) { backStackEntry ->
-            val noteId = backStackEntry.arguments?.getString("noteId")
-            NoteDetailScreen(
-                navController = navController,
-                noteId = noteId,
-            )
-        }
+
     }
 }

@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,16 +45,17 @@ import androidx.navigation.NavController
 import com.example.simplerecord.model.Note
 import com.example.simplerecord.viewmodel.NoteViewModel
 import androidx.compose.foundation.lazy.items
+import com.example.simplerecord.ui.navigation.Screen
 @Composable
 fun NoteListScreen(
     navController: NavController,
-    noteViewModel: NoteViewModel = hiltViewModel(),
+    noteViewModel: NoteViewModel ,
 
     ) {
     var isOneSelected by remember { mutableStateOf(false) }
     var selectedNoteIds by remember { mutableStateOf(emptySet<Int>()) }
     val notes by noteViewModel.noteList.collectAsStateWithLifecycle()
-    val isLoading by noteViewModel.isLoading.collectAsStateWithLifecycle()
+    val isAllNotesLoading by noteViewModel.isAllNotesLoading.collectAsStateWithLifecycle()
 
     LaunchedEffect(isOneSelected) {
         if (!isOneSelected) {
@@ -63,7 +63,7 @@ fun NoteListScreen(
         }
     }
     when {
-        isLoading -> {
+        isAllNotesLoading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -120,21 +120,21 @@ fun NoteListScreen(
                                         if (selectedNoteIds.isEmpty()) isOneSelected = false
                                     } else { // Not in selection mode, navigate to edit
                                         // Pass the Int ID to the route
-//                                        navController.navigate(Screen.NoteDetail.createRoute(note.id.toString()))
+                                        navController.navigate(Screen.NoteDetail.createRoute(note.id.toString()))
                                     }
                                 }
                             )
                         }
                     }
 
-//                    FloatingActionButton(
-//                        onClick = { navController.navigate(Screen.NoteDetail.createRoute("new")) },
-//                        modifier = Modifier
-//                            .align(Alignment.BottomEnd)
-//                            .padding(bottom = 40.dp, end = 10.dp)
-//                    ) {
-//                        Icon(Icons.Filled.Add, contentDescription = "Add new note")
-//                    }
+                    FloatingActionButton(
+                        onClick = { navController.navigate(Screen.NoteDetail.createRoute("new")) },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(bottom = 40.dp, end = 10.dp)
+                    ) {
+                        Icon(Icons.Filled.Add, contentDescription = "Add new note")
+                    }
                 }
             }
         }
