@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,6 +19,7 @@ import com.example.simplerecord.ui.component.QRCodeScannerScreen
 import com.example.simplerecord.ui.component.SearchScreen
 import com.example.simplerecord.ui.component.SettingsScreen
 import com.example.simplerecord.ui.component.TranscriptionScreen
+import com.example.simplerecord.viewmodel.BookViewModel
 import com.example.simplerecord.viewmodel.NoteViewModel
 
 
@@ -44,6 +45,7 @@ fun AppNavHost(
     innerPadding: PaddingValues // Added padding parameter
 ) {
     val noteViewModel: NoteViewModel = hiltViewModel()
+    val bookViewModel: BookViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,

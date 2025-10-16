@@ -1,15 +1,16 @@
 package com.example.simplerecord.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.simplerecord.data.BookRepository
 import com.example.simplerecord.model.Book
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-
-class BookViewModel(private val repository: BookRepository) : ViewModel() {
+@HiltViewModel
+class BookViewModel @Inject constructor(private val repository: BookRepository) : ViewModel() {
 
     private val _bookList = MutableStateFlow<List<Book>>(emptyList())
     val bookList: StateFlow<List<Book>> = _bookList
@@ -94,14 +95,4 @@ class BookViewModel(private val repository: BookRepository) : ViewModel() {
     }
 
 
-}
-
-class BookViewModelFactory(private val repository: BookRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return BookViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

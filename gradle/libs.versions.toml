@@ -28,7 +28,8 @@ zxing = "4.3.0"
 icons="1.7.8"
 coil = "3.3.0"
 hilt = "2.57.2"
-hiltNavigationCompose="1.2.0"
+hiltNavigationCompose="1.3.0"
+hiltLifecycleViewmodelCompose="1.3.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -72,6 +73,7 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 hilt-android = { group="com.google.dagger",name="hilt-android", version.ref = "hilt" }
 hilt-comiler={group="com.google.dagger",name="hilt-android-compiler",version.ref = "hilt"}
 hilt-navigation-compose={module="androidx.hilt:hilt-navigation-compose",version.ref="hiltNavigationCompose"}
+hilt-lifecycle-viewmodel-compose={module="androidx.hilt:hilt-lifecycle-viewmodel-compose",version.ref="hiltLifecycleViewmodelCompose"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

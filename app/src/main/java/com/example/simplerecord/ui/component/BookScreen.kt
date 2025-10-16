@@ -26,12 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.simplerecord.viewmodel.BookViewModel
 
 @Composable
 fun BookScreen(
-    bookViewModel: BookViewModel = viewModel(),
+    bookViewModel: BookViewModel,
 
     ) {
     val books by bookViewModel.bookList.collectAsStateWithLifecycle()

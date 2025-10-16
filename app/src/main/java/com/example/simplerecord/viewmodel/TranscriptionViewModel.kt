@@ -28,7 +28,6 @@ data class TranscriptionState(
 )
 
 class TranscriptionViewModel : ViewModel() {
-
     private val _transcriptionState = MutableStateFlow(TranscriptionState())
     val transcriptionState: StateFlow<TranscriptionState> = _transcriptionState.asStateFlow()
 
