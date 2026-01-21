@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android.plugin)
-
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -45,6 +45,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -66,12 +67,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.room.runtime.android)
+
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-    ksp(libs.hilt.comiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.room.ktx) // Optional: If you use Coroutines with Room
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.paging.runtime.ktx)
@@ -80,19 +80,20 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.sardine)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
+//    implementation(libs.retrofit.converter.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.accompanist.permissions)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.zxing.android.embedded)
+//    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.material.icons.core)
     implementation(libs.material.icons.extended)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.hilt.android)
-//    implementation(libs.hilt.navigation.compose)
-    implementation(libs.hilt.lifecycle.viewmodel.compose)
+    implementation(libs.hilt.navigation.compose)
+//    implementation(libs.hilt.lifecycle.viewmodel.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

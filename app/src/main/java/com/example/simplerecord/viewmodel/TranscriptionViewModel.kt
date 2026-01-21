@@ -6,8 +6,10 @@ import android.provider.OpenableColumns
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.simplerecord.network.RetrofitClient
+import com.example.simplerecord.api.AudioApiService
 import com.example.simplerecord.util.AudioRecorderManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +29,10 @@ data class TranscriptionState(
     val error: String? = null
 )
 
-class TranscriptionViewModel : ViewModel() {
+@HiltViewModel
+class TranscriptionViewModel @Inject constructor(
+    private val apiService: AudioApiService
+) : ViewModel()  {
     private val _transcriptionState = MutableStateFlow(TranscriptionState())
     val transcriptionState: StateFlow<TranscriptionState> = _transcriptionState.asStateFlow()
 
@@ -89,7 +94,7 @@ class TranscriptionViewModel : ViewModel() {
                 val requestFile = audioFile.asRequestBody(mimeType.toMediaTypeOrNull())
                 val audioPart = MultipartBody.Part.createFormData("audio_file", audioFile.name, requestFile)
 
-                val response = RetrofitClient.apiService.transcribeAudio(audioPart)
+                val response = apiService.transcribeAudio(audioPart)
                 if (response.isSuccessful) {
                     val transcriptionResult = response.body()
                     _transcriptionState.update {

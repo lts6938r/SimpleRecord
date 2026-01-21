@@ -88,7 +88,7 @@ fun HomeScreen(navController: NavController) {
                             DropdownMenuItem(
                                 text = { Text("添加音乐作品") },
                                 onClick = {
-                                    navController.navigate(Screen.QRCodeScanner.route)
+
                                 }
                             )
                         }

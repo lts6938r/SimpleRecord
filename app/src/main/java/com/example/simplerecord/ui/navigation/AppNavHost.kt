@@ -15,13 +15,12 @@ import com.example.simplerecord.ui.component.HomeScreen
 import com.example.simplerecord.ui.component.MineScreen
 import com.example.simplerecord.ui.component.NoteDetailScreen
 import com.example.simplerecord.ui.component.NoteListScreen
-import com.example.simplerecord.ui.component.QRCodeScannerScreen
 import com.example.simplerecord.ui.component.SearchScreen
 import com.example.simplerecord.ui.component.SettingsScreen
 import com.example.simplerecord.ui.component.TranscriptionScreen
 import com.example.simplerecord.viewmodel.BookViewModel
 import com.example.simplerecord.viewmodel.NoteViewModel
-
+import com.example.simplerecord.viewmodel.TranscriptionViewModel
 
 sealed class Screen(val route: String) {
     data object Home : Screen("home")
@@ -31,7 +30,7 @@ sealed class Screen(val route: String) {
     data object Settings : Screen("settings")
     data object Backup : Screen("backup")
     data object Transcription : Screen("Transcription")
-    data object QRCodeScanner : Screen("qrcode_scanner")
+
     data object AddBook : Screen("add_book") // For adding books, if implemented later
     data object NoteDetail : Screen("note_detail/{noteId}") {
         fun createRoute(noteId: String) = "note_detail/$noteId"
@@ -46,6 +45,8 @@ fun AppNavHost(
 ) {
     val noteViewModel: NoteViewModel = hiltViewModel()
     val bookViewModel: BookViewModel = hiltViewModel()
+    val transcriptionViewModel:TranscriptionViewModel = hiltViewModel()
+
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
@@ -78,11 +79,9 @@ fun AppNavHost(
             BackupScreen(navController = navController)
         }
         composable(Screen.Transcription.route) {
-            TranscriptionScreen()
+            TranscriptionScreen(viewModel=transcriptionViewModel)
         }
-        composable(Screen.QRCodeScanner.route) {
-            QRCodeScannerScreen()
-        }
+
         composable(Screen.AddBook.route) {
             Text("添加书籍内容")
         }

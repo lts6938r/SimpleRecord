@@ -23,7 +23,7 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun TranscriptionScreen(viewModel: TranscriptionViewModel = viewModel()) {
+fun TranscriptionScreen(viewModel: TranscriptionViewModel ) {
     val context = LocalContext.current
     val transcriptionState by viewModel.transcriptionState.collectAsState()
 
